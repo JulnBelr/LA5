@@ -43,10 +43,6 @@ const float R_known = 10000.0;
 void setup() {
   lcd.begin(16, 2);
   lcd.createChar(0, omega);
-  lcd.clear();
-  lcd.print("Ohm Meter Ready");
-  delay(1500);
-  lcd.clear();
 }
 
 void loop() {
@@ -55,6 +51,20 @@ void loop() {
   float I = (5.0 - Vout) / R_known;
   float R_unknown = Vout / I;
 
+  if (R_unknown == Vout/0) {  
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print ("Ohm Meter Ready!");
+    delay(1000);
+      // scroll 13 positions (string length) to the left
+  // to move it offscreen left:
+  for (int positionCounter = 0; positionCounter < 38; positionCounter++) {
+    // scroll one position left:
+    lcd.scrollDisplayRight();
+    delay(150);
+  }}
+else{
+  lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print("Resistance:");
   lcd.setCursor(0, 1);
@@ -63,4 +73,5 @@ void loop() {
   lcd.print("       ");      // Clear leftover chars if shorter value
 
   delay(500);  // small delay for stable refresh
+}
 }
